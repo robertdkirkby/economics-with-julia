@@ -1,4 +1,4 @@
-economics-with-julia
+Economics With Julia
 ====================
 
-Some codes for Economics (mostly value function) written in Julia
+Some codes for Economics (mostly value function iteration) written in Julia.
