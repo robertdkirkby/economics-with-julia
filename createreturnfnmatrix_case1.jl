@@ -54,23 +54,26 @@ function createreturnfnmatrix_case1(ReturnFn, n_d, n_a, n_z, d_grid, a_grid, z_g
           end
         end
       end
-    else     
-      Fmatrix=zeros(N_d*N_a,N_a,N_z);
-    
+    else
+      
+      d_gridvals=zeros(N_d,num_d);
       for i1=1:N_d
-        #d_gridvals=ind2grid_homemade(n_d,i1,d_grid);
         sub=zeros(1,num_d);
         sub[1]=rem(i1-1,n_d[1])+1;
-        if length(n_d)>1
+        if num_d>1
           for ii=2:num_d-1
-            sub(ii)=rem(ceil(i1/prod(n_d[1:ii-1]))-1,n_d[ii])+1;
+            sub[ii]=rem(ceil(i1/prod(n_d[1:ii-1]))-1,n_d[ii])+1;
           end
-          sub[num_d]=ceil(i1/prod(n_d(1:num_d-1)));
+          sub[num_d]=ceil(i1/prod(n_d[1:num_d-1]));
         
           sub=sub+[0,cumsum(n_d[1:end-1])];
-        end
-        d_gridvals=d_grid[sub];
-            
+          end
+        d_gridvals[i1,:]=d_grid[sub];
+      end
+      
+      Fmatrix=zeros(N_d*N_a,N_a,N_z);
+    
+      for i1=1:N_d            
         for i2=1:N_a
           #aprime_gridvals=ind2grid_homemade(n_a,i2,a_grid);
           #i1i2=sub2ind_homemade([N_d,N_a],[i1,i2]);

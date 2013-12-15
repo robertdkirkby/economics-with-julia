@@ -39,7 +39,7 @@ function valuefniter_case1(V0, n_d,n_a,n_z,d_grid,a_grid,z_grid, pi_z, beta, Ret
     ReturnMatrix=createreturnfnmatrix_case1(ReturnFn, n_d, n_a, n_z, d_grid, a_grid, z_grid);
     
     if Verbose==1
-#      time=toc();
+#      time=toc()
       println("Time to create return fn matrix: $time ")
 #      tic()
     end
@@ -54,40 +54,40 @@ function valuefniter_case1(V0, n_d,n_a,n_z,d_grid,a_grid,z_grid, pi_z, beta, Ret
 #        [VKron,Policy]=ValueFnIter_Case1_NoD_Par1_raw(Tolerance, V0Kron, n_a, n_z, pi_z, beta, ReturnMatrix, Howards, Verbose);
       end
       if PolIndOrVal==2
-        PolicyInd=Policy;
-        Policy=zeros(length(n_a),N_a,N_z); #NOTE: this is not actually in Kron form
+        PolicyInd=copy(Policy);
+        Policy=zeros(num_a,N_a,N_z);
         for a_c=1:N_a
           for z_c=1:N_z
-#            temp_a=ind2grid_homemade(PolicyInd(a_c,z_c),n_a,a_grid);
+#            temp_a=ind2grid_homemade(PolicyInd[a_c,z_c],n_a,a_grid);
             for ii=1:num_a
               Policy[ii,a_c,z_c]=temp_a[ii];
             end
           end
         end
       end
-#    else
-#      if Parallel==0
-#        [VKron, Policy]=ValueFnIter_Case1_raw(Tolerance, V0Kron, n_d,n_a,n_z, pi_z, beta, ReturnMatrix,Howards,Verbose);
+    else
+      if Parallel==0
+        VKron, Policy=valuefniter_case1_raw(V0Kron, n_d,n_a,n_z, pi_z, beta, ReturnMatrix);
 #      elseif Parallel==1
 #        [VKron, Policy]=ValueFnIter_Case1_Par1_raw(Tolerance, V0Kron, n_d,n_a,n_z, pi_z, beta, ReturnMatrix,Howards,Verbose);
-#      end
-#      if PolIndOrVal==2
-#        PolicyInd=Policy;
-#        Policy=zeros(length(n_d)+length(n_a),N_a,N_z);
-#        for a_c=1:N_a
-#          for z_c=1:N_z
-#            temp_d=ind2grid_homemade(n_d,PolicyInd(1,a_c,z_c),d_grid);
-#            for ii=1:length(n_d)
-#              Policy(ii,a_c,z_c)=temp_d(ii);
-#            end
-#            temp_a=ind2grid_homemade(n_a,PolicyInd(2,a_c,z_c),a_grid);
-#            for ii=1:length(n_a)
-#              Policy(length(n_d)+ii,a_c,z_c)=temp_a(ii);
-#            end
-#          end
-#        end
-#        clear PolicyInd
-      end #if n_d[1]==0
+      end
+      if PolIndOrVal==2
+        PolicyInd=copy(Policy);
+        Policy=zeros(num_d+num_a,N_a,N_z);
+        for a_c=1:N_a
+          for z_c=1:N_z
+#            temp_d=ind2grid_homemade(n_d,PolicyInd[1,a_c,z_c],d_grid);
+            for ii=1:num_d
+              Policy[ii,a_c,z_c]=temp_d[ii];
+            end
+#            temp_a=ind2grid_homemade(n_a,PolicyInd[2,a_c,z_c],a_grid);
+            for ii=1:num_a
+              Policy[num_d+ii,a_c,z_c]=temp_a[ii];
+            end
+          end
+        end
+       end
+     end #if n_d[1]==0
     
 #  elseif LowMemory==1    
 #
