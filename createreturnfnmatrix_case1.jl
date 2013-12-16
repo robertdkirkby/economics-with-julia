@@ -1,6 +1,8 @@
 function createreturnfnmatrix_case1(ReturnFn, n_d, n_a, n_z, d_grid, a_grid, z_grid, Parallel=0)
   #return Fmatrix
 
+  #Currently the 'Parallel' input is just ignored; in effect the only value it can take is 0, namely no parallelization.
+  
   #If there is no d variable, just input n_d=0 and d_grid=0
 
   N_d=prod(n_d);
