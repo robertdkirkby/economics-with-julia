@@ -11,8 +11,7 @@ function tauchenmethod(mew,sigmasq,rho,znum,q, Parallel=0, Verbose=0)
   if Verbose==1
     println("Approximating an AR(1) process using Tauchen Method with $znum points and q=$q")
   end
-  
-#if Parallel==0
+
   sigma=sqrt(sigmasq); #stddev of e
   zstar=mew/(1-rho); #expected value of z
   sigmaz=sigma/sqrt(1-rho^2); #stddev of z
@@ -29,11 +28,9 @@ function tauchenmethod(mew,sigmasq,rho,znum,q, Parallel=0, Verbose=0)
   P=P_part1-P_part2;
   P[:,1]=P_part1[:,1];
   P[:,znum]=1-P_part2[:,znum];
-#end
   
-states=z;
-transmatrix=P; #(z,zprime)
-  
-  return states, transmatrix
+  #states=z;
+  #transmatrix=P; #(z,zprime)
+  return z, P
   
 end 
