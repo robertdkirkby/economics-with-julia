@@ -3,7 +3,7 @@ function tauchenmethod(mew,sigmasq,rho,znum,q, Parallel=0, Verbose=0)
   
   #Create states vector and transition matrix for the discrete markov process approximation of AR(1) process z'=rho*z+e, e~N(mew,sigmasq), by Tauchens method
 
-  #Recommended choice for Parallel is 3 (on GPU). It is substantially faster.
+  #Recommended choice for Parallel is 3 (on GPU). It is substantially faster. (only exists in matlab version)
 
   #q: max number of std devs from mean
   #znum: number of states in discretization of z (must be an odd number)
