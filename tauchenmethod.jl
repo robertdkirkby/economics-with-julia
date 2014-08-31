@@ -28,7 +28,8 @@ function tauchenmethod(mew,sigmasq,rho,znum,q, Parallel=0, Verbose=0)
   P=P_part1-P_part2;
   P[:,1]=P_part1[:,1];
   P[:,znum]=1-P_part2[:,znum];
-  
+
+
   #states=z;
   #transmatrix=P; #(z,zprime)
   return z, P
